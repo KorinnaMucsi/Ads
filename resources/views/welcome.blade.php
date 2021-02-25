@@ -9,7 +9,7 @@
             <ul class="list-group list-group-flush">
             @foreach ($categories as $cat)                
                 <li class="list-group-item bg-secondary">
-                    <a href="" class="text-light">{{ $cat->name }}</a>
+                    <a href="{{ route('showAdsByCat', ['id'=>$cat->id]) }}" class="text-light">{{ $cat->name }}</a>
                 </li>                
             @endforeach
             </ul>

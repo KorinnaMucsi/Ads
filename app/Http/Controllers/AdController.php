@@ -19,4 +19,11 @@ class AdController extends Controller
     {
         return view('singleAd', ['ad'=>$ad]);
     }
+
+    public function showAdsByCat($id)
+    {
+        $all_ads = Ad::where('category_id', $id)->get();
+        $categories = Category::all();
+        return view('welcome', ['all_ads'=>$all_ads, 'categories'=>$categories]);
+    }
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdController::class, 'index'])->name('welcome');
 Route::get('/show-ad/{ad}', [AdController::class, 'show'])->name('showAd');
+Route::get('/show-ad-by-cat/{id}', [AdController::class, 'showAdsByCat'])->name('showAdsByCat');
 
 Auth::routes();
 
