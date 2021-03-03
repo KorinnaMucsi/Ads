@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateDepositRequest;
 use App\Models\Ad;
 use App\Models\Category;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,5 +119,31 @@ class HomeController extends Controller
     public function singleAd(Ad $ad)
     {
         return view('home.singleAd', ['ad'=>$ad]);
+    }
+
+    public function showMessages()
+    {
+        $all_msgs = Message::where('receiver_id', Auth::user()->id)->get();
+        return view('home.showMessages', ['all_msgs' => $all_msgs]);
+    }
+
+    public function reply(Request $request)
+    {
+        $message = Message::where('id', $request->msg)->first();
+        return view('home.reply', ['message' => $message]);
+    }
+
+    public function saveReply(Request $request)
+    {
+        $message = Message::where('id', $request->message_id)->first();
+
+        Message::create([
+            'text' => $request->msg,
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $request->receiver_id,
+            'ad_id' => $message->ad->id
+        ]);
+
+        return redirect(route('home.showMessages'))->with('message', 'Message sent.');
     }
 }

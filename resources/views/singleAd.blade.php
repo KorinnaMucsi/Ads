@@ -44,6 +44,9 @@
                     <textarea class="form-control" name="msg" cols="30" rows="10">Send message to {{ $ad->user->name }}</textarea><br>
                     <button class="form-control btn btn-primary" type="submit">Send</button>
                 </form>
+                @if (session()->has('message'))
+                    <span class="alert alert-success mt-2">{{ session()->get('message') }}</span>
+                @endif
             </div>
         </div>
     @endif

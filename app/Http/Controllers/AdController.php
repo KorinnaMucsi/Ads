@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ad;
 use App\Models\Category;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,6 +42,15 @@ class AdController extends Controller
 
     public function sendMessage(Request $request, Ad $ad)
     {
-        dd($ad);
+        $sender_id = Auth::user()->id;
+        $receiver_id = $ad->user->id;
+        Message::create([
+            'text' => $request->msg,
+            'sender_id' => $sender_id,
+            'receiver_id' => $receiver_id,
+            'ad_id' => $ad->id
+        ]);
+
+        return redirect()->back()->with('message', 'Message sent.');
     }
 }
